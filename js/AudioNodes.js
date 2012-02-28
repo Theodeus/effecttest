@@ -234,13 +234,14 @@ AudioNodes.Filter.prototype.filterTypes = {
  * A stero delay. (Include routing?)
  *
  * @class StereoDelay
+ * @param context {Object} The current audio context
  * @param tempo {int} (Optional) The tempo to set the delay to in beats per minute (default 90bpn)
  * @param subdivision {String} (Optional) The wanted subdivision. The possible values are:
  *  "32nd note", "16th note triplet", "dotted 32nd note", "16th note", "8th note triplet",
  *  "dotted 16th note", "8th note", "quarter note triplet", "dotted eighth note", "quarter note"
  *  "half note triplet". "dotted quarter note", "half note"
  *  (default "dotted eigth note")
- * @param secondDivision {String} Pass a second subdivision string to use two different subdivisions for the two delay nodes.
+ * @param secondDivision {String} (Optional) Pass a second subdivision string to use two different subdivisions for the two delay nodes.
  * @return {AudioNode} The stereo delay
  */
 
