@@ -18,14 +18,14 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= name %></p><img src <%= src %> alt='effect' />");
-                    this.render();
+                    this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
                     $(this.el).html(this.template({
                         name : this.model.get("name"),
                         src : this.model.get("src")
                     }));
+                    console.log("rendering delay");
                     return this;
                 },
                 events : {
