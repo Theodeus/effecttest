@@ -26,6 +26,19 @@ define(["effects", "third-party/jquery", "third-party/underscore-min", "third-pa
                     });
                     console.log("rendering collection");
                     return this;
+                },
+                events : {
+                    "click .boxView" : "showPanel"
+                },
+                showPanel : function(e){
+                    var siblings = e.target.parentNode.childNodes;
+                    for(elem in siblings){
+                        if(siblings[elem] === e.target){
+                            var effect = this.model.at(elem);
+                            var effectView = new effects[effect.get("name")].panelView({model:effect});
+                            effectView.render($("#panel"));
+                        }
+                    }                    
                 }
             })
     };

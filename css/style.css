@@ -22,3 +22,17 @@
     background-color: #333;
     margin: -90px 153px 0;
 }
+.panelView{
+    width: 350px;
+    height: 150px;
+    background-color: #888;
+    border: 2px solid #333;
+    border-radius: 15px;
+    position:absolute;
+    margin: 150px 0 0 235px;
+}
+
+
+/*Sliders*/
+
+.ui-slider { float:left; margin:15px;}

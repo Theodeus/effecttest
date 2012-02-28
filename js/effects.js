@@ -1,6 +1,8 @@
 //effect "superclass" and factory
 
-define(["third-party/jquery", "third-party/underscore-min", "third-party/backbone"], function() {
+//knobs found at http://tutorialzine.com/2011/11/pretty-switches-css3-jquery/
+
+define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-min", "third-party/backbone"], function() {
 
     var effects = {
         
@@ -33,9 +35,6 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                     this.el.style.backgroundColor = this.background;
                     console.log("rendering delay");
                     return this;
-                },
-                events : {
-                    "click" : "render"
                 }
             }),
             
@@ -43,17 +42,17 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<h3><%= title %></h3><div id='control1'></div><div id='control2'></div>");
                 },
-                render : function() {
+                render : function(parent) {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        title : this.model.get("name")
                     }));
+                    $(parent).html("");
+                    $(parent).append(this.el);
+                    effects.renderKnob($("#control1"), "tempo", this.model, this.model.get("tempo"));
+                    effects.renderKnob($("#control2"), "level", this.model, this.model.get("level"));
                     return this;
-                },
-                events : {
-                    "click" : "render"
                 }
             })
         },
@@ -104,10 +103,12 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                     this.model.bind("change", this.render);
                     this.template = _.template("<p><%= title %></p>");
                 },
-                render : function() {
+                render : function(parent) {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        title : this.model.get("name")
                     }));
+                    $(parent).html("");
+                    $(parent).append(this.el);
                     return this;
                 },
                 events : {
@@ -159,10 +160,12 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                     this.model.bind("change", this.render);
                     this.template = _.template("<p><%= title %></p>");
                 },
-                render : function() {
+                render : function(parent) {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        title : this.model.get("name")
                     }));
+                    $(parent).html("");
+                    $(parent).append(this.el);
                     return this;
                 },
                 events : {
@@ -213,10 +216,12 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                     this.model.bind("change", this.render);
                     this.template = _.template("<p><%= title %></p>");
                 },
-                render : function() {
+                render : function(parent) {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        title : this.model.get("name")
                     }));
+                    $(parent).html("");
+                    $(parent).append(this.el);
                     return this;
                 },
                 events : {
@@ -267,16 +272,35 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                     this.model.bind("change", this.render);
                     this.template = _.template("<p><%= title %></p>");
                 },
-                render : function() {
+                render : function(parent) {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        title : this.model.get("name")
                     }));
+                    $(parent).html("");
+                    $(parent).append(this.el);
                     return this;
                 },
                 events : {
                     "click" : "render"
                 }
             })
+        },
+        
+        
+        renderKnob : function(target, parameter, model, value){
+            
+             $(target).slider({
+                orientation: "vertical",
+                range: "min",
+                step: 0.001,
+                min: 0,
+                max: 1,
+                value: value || 0.5,
+                slide: function( event, ui ) {
+                    model.set(parameter, ui.value);
+                }
+            });
+    
         } 
 
     };
