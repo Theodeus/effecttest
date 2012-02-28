@@ -53,6 +53,9 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     effects.renderKnob($("#tempo"), "tempo", this.model, this.model.get("tempo"));
                     effects.renderKnob($("#level"), "level", this.model, this.model.get("level"));
                     return this;
+                },
+                events : {
+                    "click" : "render"
                 }
             })
         },
