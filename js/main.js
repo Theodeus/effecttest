@@ -4,11 +4,15 @@ window.onload = function(){
         
         var context = new webkitAudioContext()
         var playing = false;
-        var currentSong;
+        var currentSong, animationTimer;
+        
+        
         var startPlayback = function(presets){
             if(playing){
                 currentSong.noteOff(0);
                 playing = false;
+                clearInterval(animationTimer);
+                document.getElementById("effectPipe").style.backgroundColor = "#333";
                 return;
             }
             var output = context.destination,
@@ -20,9 +24,7 @@ window.onload = function(){
                 
             audio.buffer = buffer;
             audio.loop = true;
-            
-            
-            
+
             for(var model in presets){
                 
                 var instance = presets[model];
@@ -84,7 +86,16 @@ window.onload = function(){
             finalNode.connect(output);
             playing = true;
             currentSong = audio;
-            audio.noteOn(0);    
+            audio.noteOn(0);  
+            
+            var randomColor = function(){return Math.floor(Math.random()*9)};
+            var effectPipe = document.getElementById("effectPipe");
+            //start animation
+            animationTimer = setInterval(function(){
+                
+                effectPipe.style.backgroundColor = "#"+randomColor()+randomColor()+randomColor()+randomColor()+randomColor()+randomColor();
+            },1000/8)
+              
         };
         
         
@@ -107,7 +118,7 @@ window.onload = function(){
        presets.add(filter);
         presets.add(compressor);
 
-        var presetView = new preset.view({model: presets});
+        var presetView = new preset.view({model: presets, id: "effectPipe"});
         
         document.addEventListener("keydown", function(e){
             if(e.keyCode === 32){

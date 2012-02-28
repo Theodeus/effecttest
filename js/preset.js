@@ -14,6 +14,7 @@ define(["effects", "third-party/jquery", "third-party/underscore-min", "third-pa
                     _.bindAll(this, "render");
                     this.model.bind("add", this.render);
                     this.model.bind("remove", this.render);
+                    
                     this.render();
                 },
                 render : function() {
