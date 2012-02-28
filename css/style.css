@@ -24,15 +24,19 @@
 }
 .panelView{
     width: 350px;
-    height: 150px;
+    height: 200px;
     background-color: #888;
     border: 2px solid #333;
     border-radius: 15px;
     position:absolute;
     margin: 150px 0 0 235px;
 }
+.parameterLabel{
+    float:left;
+    margin: 0 -25px 0 10px;
+}
 
 
 /*Sliders*/
 
-.ui-slider { float:left; margin:15px;}
+.ui-slider { float:left; margin:15px 100px 15px 0;}

@@ -129,8 +129,8 @@ AudioNodes.Filter = function(context, type, parameters) {
         entryNode = context.createGainNode(), 
         output = context.createGainNode(), 
         type = type || "lowpass", 
-        frequency = parameters.frequency || 0, 
-        q = parameters.q || 0, 
+        frequency = parameters.frequency === undefined ? 440 : parameters.frequency, 
+        q = parameters.q === undefined ? 1 : parameters.q, 
         gain = parameters.gain || 0;
 
     entryNode.connect(filter);
@@ -148,6 +148,9 @@ AudioNodes.Filter = function(context, type, parameters) {
     this.context = context;
     
     this.setFilterType(type);
+    
+    frequency = Math.max(frequency, 50);
+    frequency = Math.min(frequency, 10000);
     this.setFrequency(frequency);
     if(filter.type === undefined) {
         console.log("Found no filter of type: " + type + ", setting to lowpass");
@@ -256,6 +259,8 @@ AudioNodes.StereoDelay = function(context, tempo, subdivision, secondDivision) {
     delayFeedback2.gain.value = 0.5;
 
     if(tempo) {
+        tempo = Math.max(tempo, 40);
+        tempo = Math.min(tempo, 200); 
         bpmDelay1.setTempo(tempo);
         bpmDelay2.setTempo(tempo);
     } else {
@@ -378,7 +383,10 @@ AudioNodes.StereoDelay.prototype.setSubdivision = function(subdivision, secondSu
  * @param level {Number} The level of the convolver, 0-1
  */
 AudioNodes.Convolver = function(context, impulse) {
-    var convolver = context.createConvolver(), entryNode = context.createGainNode(), output = context.createGainNode();
+    var convolver = context.createConvolver(), 
+        entryNode = context.createGainNode(), 
+        output = context.createGainNode(),
+        wet = context.createGainNode();
 
     if( typeof impulse === "string") {
         var xhr = new XMLHttpRequest();
@@ -403,11 +411,13 @@ AudioNodes.Convolver = function(context, impulse) {
     }
 
     entryNode.connect(convolver);
-    convolver.connect(output);
+    entryNode.connect(output);
+    convolver.connect(wet);
+    wet.connect(output);
 
     this.input = entryNode;
     this.output = output;
-    this.level = output;
+    this.level = wet;
 };
 /**
  * Connects the convolver to another node.

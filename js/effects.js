@@ -42,7 +42,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.template = _.template("<h3><%= title %></h3><div id='control1'></div><div id='control2'></div>");
+                    this.template = _.template("<h3><%= title %></h3><span class='parameterLabel'>TEMPO</span><div id='tempo'></div><span class='parameterLabel'>LEVEL</span><div id='level'></div>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -50,8 +50,8 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     }));
                     $(parent).html("");
                     $(parent).append(this.el);
-                    effects.renderKnob($("#control1"), "tempo", this.model, this.model.get("tempo"));
-                    effects.renderKnob($("#control2"), "level", this.model, this.model.get("level"));
+                    effects.renderKnob($("#tempo"), "tempo", this.model, this.model.get("tempo"));
+                    effects.renderKnob($("#level"), "level", this.model, this.model.get("level"));
                     return this;
                 }
             })
@@ -100,8 +100,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>FREQUENCY</span><div id='freq'></div><span class='parameterLabel'>Q</span><div id='q'></div>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -109,6 +108,8 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     }));
                     $(parent).html("");
                     $(parent).append(this.el);
+                    effects.renderKnob($("#freq"), "freq", this.model, this.model.get("freq"));
+                    effects.renderKnob($("#q"), "q", this.model, this.model.get("q"));
                     return this;
                 },
                 events : {
@@ -157,8 +158,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>LEVEL</span><div id='level'></div>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -166,6 +166,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     }));
                     $(parent).html("");
                     $(parent).append(this.el);
+                    effects.renderKnob($("#level"), "level", this.model, this.model.get("level"));
                     return this;
                 },
                 events : {
@@ -213,8 +214,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>GAIN</span><div id='gain'></div>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -222,6 +222,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     }));
                     $(parent).html("");
                     $(parent).append(this.el);
+                    effects.renderKnob($("#gain"), "gain", this.model, this.model.get("gain"));
                     return this;
                 },
                 events : {
@@ -269,8 +270,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<p><%= title %></p><p>This node makes sure there's no nasty peaks. Try setting a low filter frequency value and high filter q value to see what i mean.</p><p>There's no settings to be made in the Web Audio implementation at the moment though.</p>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -295,7 +295,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 step: 0.001,
                 min: 0,
                 max: 1,
-                value: value || 0.5,
+                value: value === undefined ? 0.5 : value,
                 slide: function( event, ui ) {
                     model.set(parameter, ui.value);
                 }
