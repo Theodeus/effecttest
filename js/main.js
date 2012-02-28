@@ -7,4 +7,11 @@ require(["soundfile", "effects", "play", "third-party/jquery", "third-party/unde
     var songView = new soundfile.view({model: song});
 
     $("#song").html(songView.el);
+
+    var delay = new effects.delay.model();
+    var delayView = new effects.delay.boxView({model: delay});
+    
+    $("#song").append(delayView.el);
+    
+    console.log(delay);
 });
