@@ -1,0 +1,7 @@
+.songView{
+    height: 50px;
+    max-width: 200px;
+    border: 3px dotted #333;
+    text-align: center;
+    border-radius: 15px;
+}

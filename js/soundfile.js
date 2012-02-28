@@ -35,12 +35,14 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
             }
         }),
         view : Backbone.View.extend({
+            className: "songView",
             initialize : function() {
                 _.bindAll(this, "render");
-                this.template = _.template("<span style='background-color: #f00'>HEJHEJ</span>");
+                this.model.bind("change", this.render);
+                this.template = _.template("<p><%= title %></p>");
             },
             render : function() {
-                $(this.el).html(this.template());
+                $(this.el).html(this.template({title: this.model.get("title")}));
                 return this;
             },
             events: {
