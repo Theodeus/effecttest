@@ -1,9 +1,10 @@
 .songView{
-    height: 150px;
+    height: 100px;
     max-width: 150px;
     border: 3px dotted #333;
     text-align: center;
     border-radius: 15px;
+    padding-top:50px;
 }
 
 .boxView{
@@ -12,13 +13,12 @@
     border: 2px solid #333;
     text-align: center;
     border-radius: 5px;
-    background-color: #756;
     float: left;
     margin: -12px 25px 0;
 }
 .presetView{
-    width: 500px;
+    width: 520px;
     height: 25px;
     background-color: #333;
-    margin: -90px 152px 0;
+    margin: -90px 153px 0;
 }

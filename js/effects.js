@@ -3,7 +3,9 @@
 define(["third-party/jquery", "third-party/underscore-min", "third-party/backbone"], function() {
 
     var effects = {
+        
         delay : {
+            
             model : Backbone.Model.extend({
                 initialize : function() {
                     //_.bindAll(this, "changeFile");
@@ -13,8 +15,10 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                     });
                 }
             }),
+            
             boxView : Backbone.View.extend({
                 className : "boxView",
+                background : "#f00",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
@@ -25,6 +29,7 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                         name : this.model.get("name"),
                         src : this.model.get("src")
                     }));
+                    this.el.style.backgroundColor = this.background;
                     console.log("rendering delay");
                     return this;
                 },
@@ -32,6 +37,7 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                     "click" : "render"
                 }
             }),
+            
             panelView : Backbone.View.extend({
                 className : "panelView",
                 initialize : function() {
@@ -50,34 +56,42 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 }
             })
         },
+        
+        
         filter : {
+            
             model : Backbone.Model.extend({
-                initialize : function(_url, _title) {
-                    _.bindAll(this, "changeFile");
+                initialize : function() {
+                    //_.bindAll(this, "changeFile");
                     this.set({
-                        url : _url,
-                        title : _title
+                        name : "filter",
+                        img : "img/filter.png"
                     });
-                    this.changeFile(_url, _title);
                 }
             }),
+            
             boxView : Backbone.View.extend({
                 className : "boxView",
+                background : "#00f",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        name : this.model.get("name"),
+                        src : this.model.get("src")
                     }));
+                    this.el.style.backgroundColor = this.background;
+                    console.log("rendering filter");
                     return this;
                 },
                 events : {
                     "click" : "render"
                 }
             }),
+            
             panelView : Backbone.View.extend({
                 className : "panelView",
                 initialize : function() {
@@ -96,34 +110,42 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 }
             })
         },
+        
+        
         reverb : {
+            
             model : Backbone.Model.extend({
-                initialize : function(_url, _title) {
-                    _.bindAll(this, "changeFile");
+                initialize : function() {
+                    //_.bindAll(this, "changeFile");
                     this.set({
-                        url : _url,
-                        title : _title
+                        name : "reverb",
+                        img : "img/reverb.png"
                     });
-                    this.changeFile(_url, _title);
                 }
             }),
+            
             boxView : Backbone.View.extend({
                 className : "boxView",
+                background : "#ff0",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        name : this.model.get("name"),
+                        src : this.model.get("src")
                     }));
+                    this.el.style.backgroundColor = this.background;
+                    console.log("rendering reverb");
                     return this;
                 },
                 events : {
                     "click" : "render"
                 }
             }),
+            
             panelView : Backbone.View.extend({
                 className : "panelView",
                 initialize : function() {
@@ -142,34 +164,42 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 }
             })
         },
+        
+        
         volume : {
+            
             model : Backbone.Model.extend({
-                initialize : function(_url, _title) {
-                    _.bindAll(this, "changeFile");
+                initialize : function() {
+                    //_.bindAll(this, "changeFile");
                     this.set({
-                        url : _url,
-                        title : _title
+                        name : "volume",
+                        img : "img/volume.png"
                     });
-                    this.changeFile(_url, _title);
                 }
             }),
+            
             boxView : Backbone.View.extend({
                 className : "boxView",
+                background : "#0ff",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        name : this.model.get("name"),
+                        src : this.model.get("src")
                     }));
+                    this.el.style.backgroundColor = this.background;
+                    console.log("rendering volume");
                     return this;
                 },
                 events : {
                     "click" : "render"
                 }
             }),
+            
             panelView : Backbone.View.extend({
                 className : "panelView",
                 initialize : function() {
@@ -188,34 +218,42 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 }
             })
         },
+        
+        
         compressor : {
+            
             model : Backbone.Model.extend({
-                initialize : function(_url, _title) {
-                    _.bindAll(this, "changeFile");
+                initialize : function() {
+                    //_.bindAll(this, "changeFile");
                     this.set({
-                        url : _url,
-                        title : _title
+                        name : "compressor",
+                        img : "img/compressor.png"
                     });
-                    this.changeFile(_url, _title);
                 }
             }),
+            
             boxView : Backbone.View.extend({
                 className : "boxView",
+                background : "#0f0",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
-                    this.template = _.template("<p><%= title %></p>");
+                    this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
                     $(this.el).html(this.template({
-                        title : this.model.get("title")
+                        name : this.model.get("name"),
+                        src : this.model.get("src")
                     }));
+                    this.el.style.backgroundColor = this.background;
+                    console.log("rendering compressor");
                     return this;
                 },
                 events : {
                     "click" : "render"
                 }
             }),
+            
             panelView : Backbone.View.extend({
                 className : "panelView",
                 initialize : function() {

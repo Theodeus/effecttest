@@ -9,14 +9,20 @@ window.onload = function(){
         $("#song").html(songView.el);
     
         var delay = new effects.delay.model();
-        var delay2 = new effects.delay.model();
+        var volume = new effects.volume.model();
+        var reverb = new effects.reverb.model();
+        var compressor = new effects.compressor.model();
+        var filter = new effects.filter.model();
         
        // $("#effects").append(delayView.el);
         
         var presets = new preset.collection();
         presets.add(delay);
-        presets.add(delay2);
-        console.log(presets);
+        presets.add(volume);
+        presets.add(reverb);
+        presets.add(compressor);
+        presets.add(filter);
+
         var presetView = new preset.view({model: presets});
         
         $("#effects").append(presetView.el);

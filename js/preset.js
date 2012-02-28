@@ -18,16 +18,14 @@ define(["effects", "third-party/jquery", "third-party/underscore-min", "third-pa
                 },
                 render : function() {
                     var that = this;
+                    this.el.innerHTML = "";
                     _.each(this.model.models, function(effect){
-                        var delayView = new effects[effect.get("name")].boxView({model:effect});
-                        delayView.render();
-                        $(that.el).append(delayView.el);
+                        var effectView = new effects[effect.get("name")].boxView({model:effect});
+                        effectView.render();
+                        $(that.el).append(effectView.el);
                     });
                     console.log("rendering collection");
                     return this;
-                },
-                events : {
-                    "click" : "render"
                 }
             })
     };
