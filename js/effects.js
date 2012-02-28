@@ -7,6 +7,7 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
         delay : {
             
             model : Backbone.Model.extend({
+                delayTime : 0.5,
                 initialize : function() {
                     //_.bindAll(this, "changeFile");
                     this.set({
@@ -61,6 +62,10 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
         filter : {
             
             model : Backbone.Model.extend({
+                filterFreq : 440,
+                filterQ : 1,
+                filterGain : 1,
+                filterType : 0,
                 initialize : function() {
                     //_.bindAll(this, "changeFile");
                     this.set({
@@ -115,6 +120,7 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
         reverb : {
             
             model : Backbone.Model.extend({
+                wet : 0.3,
                 initialize : function() {
                     //_.bindAll(this, "changeFile");
                     this.set({
@@ -167,7 +173,7 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
         
         
         volume : {
-            
+            vol : 1,
             model : Backbone.Model.extend({
                 initialize : function() {
                     //_.bindAll(this, "changeFile");
