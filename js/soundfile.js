@@ -1,6 +1,6 @@
 //soundfile abstraction
 
-define(["third-party/underscore-min", "third-party/backbone-min"], function() {
+define(["third-party/jquery", "third-party/underscore-min", "third-party/backbone"], function() {
 
     var soundfile = {
         model : Backbone.Model.extend({
@@ -16,8 +16,9 @@ define(["third-party/underscore-min", "third-party/backbone-min"], function() {
                 this.set({
                     url : newUrl
                 });
+                var urlSplit = newUrl.split("/");
                 this.set({
-                    title : title || "untitled"
+                    title : title || urlSplit[urlSplit.length-1].replace(".mp3", "") || "untitled"
                 });
                 var that = this;
                 var xhr = new XMLHttpRequest();
@@ -36,10 +37,14 @@ define(["third-party/underscore-min", "third-party/backbone-min"], function() {
         view : Backbone.View.extend({
             initialize : function() {
                 _.bindAll(this, "render");
+                this.template = _.template("<span style='background-color: #f00'>HEJHEJ</span>");
             },
             render : function() {
-                this.el.innerHTML = "I'm a song!";
+                $(this.el).html(this.template());
                 return this;
+            },
+            events: {
+                "click": "render"
             }
         })
     };
