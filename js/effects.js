@@ -21,7 +21,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             
             boxView : Backbone.View.extend({
                 className : "boxView",
-                background : "#f00",
+                background : "#faa",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
@@ -76,7 +76,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             
             boxView : Backbone.View.extend({
                 className : "boxView",
-                background : "#00f",
+                background : "#aaf",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
@@ -134,7 +134,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             
             boxView : Backbone.View.extend({
                 className : "boxView",
-                background : "#ff0",
+                background : "#ffa",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
@@ -190,7 +190,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             
             boxView : Backbone.View.extend({
                 className : "boxView",
-                background : "#0ff",
+                background : "#aff",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);
@@ -246,7 +246,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             
             boxView : Backbone.View.extend({
                 className : "boxView",
-                background : "#0f0",
+                background : "#afa",
                 initialize : function() {
                     _.bindAll(this, "render");
                     this.model.bind("change", this.render);

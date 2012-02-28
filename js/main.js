@@ -9,6 +9,7 @@ window.onload = function(){
             if(playing){
                 currentSong.noteOff(0);
                 playing = false;
+                return;
             }
             var output = context.destination,
                 audio = context.createBufferSource(),
