@@ -50,9 +50,6 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                         var parent = that.model.get("parent");
                         //the index of the target
                         var emptyIndex = parent.indexOf(that.model);
-                        console.log(emptyIndex);
-                        console.log(that.model.cid);
-                        console.log(parent.models["0"].attributes.img);
                         //this gives us the effect name
                         var effectToAdd = e.target.href.split("#")[1];
                         //add new effect first at the calculated index and then remove the empty model to avoid rendering issues
@@ -81,7 +78,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                         li.appendChild(anchor);
                         $(this.el).append(li);
                     }
-                    $(this.el).append("</ul>");
+                    $(this.el).append("</ul><span class='close'>[click to close]</span>");
                     $(parent).append(this.el);
                     return this;
                 },
@@ -126,7 +123,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.template = _.template("<h3><%= title %></h3><span class='parameterLabel'>TEMPO</span><div id='tempo'></div><span class='parameterLabel'>LEVEL</span><div id='level'></div>");
+                    this.template = _.template("<h3><%= title %></h3><span class='parameterLabel'>TEMPO</span><div id='tempo'></div><span class='parameterLabel'>LEVEL</span><div id='level'></div><span class='close'>[click to close]</span>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -182,7 +179,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>FREQUENCY</span><div id='freq'></div><span class='parameterLabel'>Q</span><div id='q'></div>");
+                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>FREQUENCY</span><div id='freq'></div><span class='parameterLabel'>Q</span><div id='q'></div><span class='close'>[click to close]</span>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -239,7 +236,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>LEVEL</span><div id='level'></div>");
+                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>LEVEL</span><div id='level'></div><span class='close'>[click to close]</span>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -294,7 +291,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>GAIN</span><div id='gain'></div>");
+                    this.template = _.template("<p><%= title %></p><span class='parameterLabel'>GAIN</span><div id='gain'></div><span class='close'>[click to close]</span>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({
@@ -349,7 +346,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                 className : "panelView",
                 initialize : function() {
                     _.bindAll(this, "render");
-                    this.template = _.template("<p><%= title %></p><p>This node makes sure there's no nasty peaks. Try setting a low filter frequency value and high filter q value to see what i mean.</p><p>There's no settings to be made in the Web Audio implementation at the moment though.</p>");
+                    this.template = _.template("<p><%= title %></p><p>This node makes sure there's no nasty peaks. Try setting a low filter frequency value and high filter q value to see what i mean.</p><p>There's no settings to be made in the Web Audio implementation at the moment though.</p><span class='close'>[click to close]</span>");
                 },
                 render : function(parent) {
                     $(this.el).html(this.template({

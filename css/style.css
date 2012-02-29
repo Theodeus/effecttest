@@ -38,6 +38,9 @@ body{
 header{
     font: 3em 'DubtronicInline';
 }
+h1{
+    margin:0 0 50px;
+}
 
 .songView{
     height: 100px;
@@ -56,6 +59,12 @@ header{
     border-radius: 5px;
     float: left;
     margin: -12px 25px 0;
+}
+.boxView:hover{
+    border: 2px solid #383;
+    margin: -14px 25px 0;
+    cursor:pointer;
+    box-shadow: 0 0 4px #333;
 }
 .presetView{
     width: 520px;
@@ -83,6 +92,18 @@ li{
 }
 li a{
     text-decoration: none;
+}
+#instructions{
+    position: absolute;
+    margin: -45px 0 0 135px;
+}
+#play{
+    margin: -60px 0 0 668px; 
+}
+.close{
+    float:left;
+    margin: 100px;
+    width: 92px;
 }
 
 
