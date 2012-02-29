@@ -94,7 +94,7 @@ window.onload = function(){
         
         
         //main program flow
-        var song = new soundfile.model("sounds/song.mp3", "a short song");
+        var song = new soundfile.model("sounds/song.mp3", "Click to change song");
         var songView = new soundfile.view({model: song});
     
         $("#song").html(songView.el);

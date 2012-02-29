@@ -8,7 +8,8 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 _.bindAll(this, "changeFile");
                 this.set({
                     url : _url,
-                    title : _title
+                    title : _title,
+                    files : ["sounds/demo.mp3", "sounds/drums.mp3", "sounds/song.mp3"]
                 });
                 this.changeFile(_url, _title);
             },
@@ -37,7 +38,7 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
         view : Backbone.View.extend({
             className: "songView",
             initialize : function() {
-                _.bindAll(this, "render");
+                _.bindAll(this, "render", "nextFile");
                 this.model.bind("change", this.render);
                 this.template = _.template("<p><%= title %></p>");
             },
@@ -46,7 +47,18 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 return this;
             },
             events: {
-                "click": "render"
+                "click": "nextFile"
+            },
+            nextFile : function(){
+                //check if this is the first time we switch songs?
+                if(this.model.get("currentFileIndex") === undefined){
+                    this.model.set("currentFileIndex", 0);
+                }
+                var index = this.model.get("currentFileIndex");
+                this.model.changeFile(this.model.get("files")[index]);
+                this.render();
+                this.model.set("currentFileIndex", (this.model.get("currentFileIndex")+1) % this.model.get("files").length);
+                
             }
         })
     };
