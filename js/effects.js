@@ -19,7 +19,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             }),
             
             boxView : Backbone.View.extend({
-                className : "boxView",
+                className : "boxView empty",
                 background : "#ccc",
                 initialize : function() {
                     _.bindAll(this, "render");
@@ -27,9 +27,9 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
-                    $(this.el).html(this.template({
-                        name : this.model.get("name")
-                    }));
+                   // $(this.el).html(this.template({
+                    //    name : this.model.get("name")
+                   // }));
                     this.el.style.backgroundColor = this.background;
                     return this;
                 }
@@ -102,7 +102,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             }),
             
             boxView : Backbone.View.extend({
-                className : "boxView",
+                className : "boxView delay",
                 background : "#faa",
                 initialize : function() {
                     _.bindAll(this, "render");
@@ -110,10 +110,10 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
-                    $(this.el).html(this.template({
-                        name : this.model.get("name"),
-                        src : this.model.get("src")
-                    }));
+                  //  $(this.el).html(this.template({
+                  //      name : this.model.get("name"),
+                  //      src : this.model.get("src")
+                  //  }));
                     this.el.style.backgroundColor = this.background;
                     return this;
                 }
@@ -155,7 +155,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             }),
             
             boxView : Backbone.View.extend({
-                className : "boxView",
+                className : "boxView filter",
                 background : "#aaf",
                 initialize : function() {
                     _.bindAll(this, "render");
@@ -163,10 +163,10 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
-                    $(this.el).html(this.template({
-                        name : this.model.get("name"),
-                        src : this.model.get("src")
-                    }));
+                //    $(this.el).html(this.template({
+                //        name : this.model.get("name"),
+                //        src : this.model.get("src")
+               //     }));
                     this.el.style.backgroundColor = this.background;
                     return this;
                 },
@@ -212,7 +212,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             }),
             
             boxView : Backbone.View.extend({
-                className : "boxView",
+                className : "boxView reverb",
                 background : "#ffa",
                 initialize : function() {
                     _.bindAll(this, "render");
@@ -220,10 +220,10 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
-                    $(this.el).html(this.template({
-                        name : this.model.get("name"),
-                        src : this.model.get("src")
-                    }));
+                //    $(this.el).html(this.template({
+                //        name : this.model.get("name"),
+                 //       src : this.model.get("src")
+                //    }));
                     this.el.style.backgroundColor = this.background;
                     return this;
                 },
@@ -267,7 +267,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             }),
             
             boxView : Backbone.View.extend({
-                className : "boxView",
+                className : "boxView volume",
                 background : "#aff",
                 initialize : function() {
                     _.bindAll(this, "render");
@@ -275,10 +275,10 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
-                    $(this.el).html(this.template({
-                        name : this.model.get("name"),
-                        src : this.model.get("src")
-                    }));
+                   // $(this.el).html(this.template({
+                   //     name : this.model.get("name"),
+                  //      src : this.model.get("src")
+                  //  }));
                     this.el.style.backgroundColor = this.background;
                     return this;
                 },
@@ -322,7 +322,7 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
             }),
             
             boxView : Backbone.View.extend({
-                className : "boxView",
+                className : "boxView compressor",
                 background : "#afa",
                 initialize : function() {
                     _.bindAll(this, "render");
@@ -330,10 +330,10 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
                 },
                 render : function() {
-                    $(this.el).html(this.template({
-                        name : this.model.get("name"),
-                        src : this.model.get("src")
-                    }));
+                 //   $(this.el).html(this.template({
+                 //       name : this.model.get("name"),
+                 //       src : this.model.get("src")
+                 //   }));
                     this.el.style.backgroundColor = this.background;
                     return this;
                 },

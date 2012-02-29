@@ -106,6 +106,23 @@ li a{
     width: 92px;
 }
 
+/*Effect boxes*/
+.compressor{
+    background-image: url("../img/compressor.png");
+}
+.volume{
+    background-image: url("../img/volume.png");
+}
+.delay{
+    background-image: url("../img/delay.png");
+}
+.filter{
+    background-image: url("../img/filter.png");
+}
+.reverb{
+    background-image: url("../img/reverb.png");
+}
+
 
 /*Sliders*/
 
