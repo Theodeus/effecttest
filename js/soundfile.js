@@ -9,7 +9,7 @@ define(["third-party/jquery", "third-party/underscore-min", "third-party/backbon
                 this.set({
                     url : _url,
                     title : _title,
-                    files : ["sounds/demo.mp3", "sounds/drums.mp3", "sounds/song.mp3"]
+                    files : ["sounds/demo.mp3", "sounds/drums.mp3", "sounds/sour.mp3", "sounds/song.mp3"]
                 });
                 this.changeFile(_url, _title);
             },

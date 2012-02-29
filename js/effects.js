@@ -50,6 +50,9 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                         var parent = that.model.get("parent");
                         //the index of the target
                         var emptyIndex = parent.indexOf(that.model);
+                        console.log(emptyIndex);
+                        console.log(that.model.cid);
+                        console.log(parent.models["0"].attributes.img);
                         //this gives us the effect name
                         var effectToAdd = e.target.href.split("#")[1];
                         //add new effect first at the calculated index and then remove the empty model to avoid rendering issues

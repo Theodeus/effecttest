@@ -36,9 +36,11 @@ define(["effects", "third-party/jquery", "third-party/underscore-min", "third-pa
                     return this;
                 },
                 events : {
-                    "click .boxView" : "showPanel"
+                    "click .boxView" : "showPanel",
+                    "dblclick .boxView" : "removeEffect"
                 },
                 showPanel : function(e){
+                    e.preventDefault();
                     //find out what element was clicked by camparing the target with the parents children
                     var siblings = e.target.parentNode.childNodes;
                     for(elem in siblings){
@@ -49,7 +51,24 @@ define(["effects", "third-party/jquery", "third-party/underscore-min", "third-pa
                             //inject the element you want the panel to attach itself to
                             effectView.render($("#panel"));
                         }
-                    }                    
+                    }
+                    return false;                  
+                },
+                removeEffect : function(e){
+                    e.preventDefault();
+                    $("#panel").html("");
+                    //remove effect if it's not empty
+                    if(e.target.childNodes[0].innerText !== "empty"){
+                        var index;
+                        for(var i in this.el.children){
+                            if(this.el.children[i] === e.target){
+                                index = i;
+                            }
+                        }                        
+                        this.model.add(new effects.empty.model(this.model), {at:index});
+                        this.model.remove(this.model.at(parseInt(index,10)+1));
+                    }
+                    return false;                
                 }
             })
 
