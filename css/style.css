@@ -36,7 +36,7 @@ body{
 }
 
 header{
-    font: 2em 'DubtronicInline';
+    font: 3em 'DubtronicInline';
 }
 
 .songView{
@@ -77,6 +77,12 @@ header{
 .parameterLabel{
     float:left;
     margin: 0 -25px 0 10px;
+}
+li{
+    list-style: none;
+}
+li a{
+    text-decoration: none;
 }
 
 

@@ -39,12 +39,10 @@ window.onload = function(){
                             node.setLevel(instance.params.level);
                         }
                         nodes.push(node);
-                        console.log("I'm a delay");
                         break;
                     case "filter":
                         node = new AudioNodes.Filter(context, "lowpass", {frequency: Math.pow(instance.params.freq, 2)*10000, q: instance.params.q*15});
                         nodes.push(node);
-                        console.log("I'm a filter");
                         break;
                     case "reverb":
                         node = new AudioNodes.Convolver(context, "sounds/impulse_rev.wav");
@@ -52,24 +50,20 @@ window.onload = function(){
                             node.setLevel(instance.params.level);
                         }
                         nodes.push(node);
-                        console.log("I'm a reverb");
                         break;
                     case "compressor":
                         node = context.createDynamicsCompressor();
-                        console.log(node);
                         node.input = node;
                         nodes.push(node);
-                        console.log("I'm a compressor");
                         break;
                     case "volume":
                         node = context.createGainNode();
                         node.input = node;
                         node.gain.value = instance.params.gain === undefined ? 1 : instance.params.gain;
                         nodes.push(node);
-                        console.log("I'm a volume");
                         break;    
                     default:
-                        console.log("unknown effect");
+                        //console.log("empty slot");
                         break;
                 }
             }
@@ -104,20 +98,8 @@ window.onload = function(){
         var songView = new soundfile.view({model: song});
     
         $("#song").html(songView.el);
-    
-        var delay = new effects.delay.model();
-        var volume = new effects.volume.model();
-        var reverb = new effects.reverb.model();
-        var compressor = new effects.compressor.model();
-        var filter = new effects.filter.model();      
-        var presets = new preset.collection();
         
-       presets.add(delay);
-        presets.add(volume);
-        presets.add(reverb);
-       presets.add(filter);
-        presets.add(compressor);
-
+        var presets = new preset.collection();
         var presetView = new preset.view({model: presets, id: "effectPipe"});
         
         document.addEventListener("keydown", function(e){
@@ -130,7 +112,6 @@ window.onload = function(){
                                  };
                     effectNodes.push(effectNode);
                 }
-                console.log(presets);
                 startPlayback(effectNodes);
             }
         });

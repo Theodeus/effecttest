@@ -6,6 +6,88 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
 
     var effects = {
         
+        empty : {
+            
+           model : Backbone.Model.extend({
+                initialize : function(parent) {
+                    this.set({
+                        name : "empty",
+                        img : "img/empty.png",
+                        parent : parent
+                    });
+                }
+            }),
+            
+            boxView : Backbone.View.extend({
+                className : "boxView",
+                background : "#ccc",
+                initialize : function() {
+                    _.bindAll(this, "render");
+                    this.model.bind("change", this.render);
+                    this.template = _.template("<p><%= name %></p>"/*<img src <%= src %> alt='effect' />"*/);
+                },
+                render : function() {
+                    $(this.el).html(this.template({
+                        name : this.model.get("name")
+                    }));
+                    this.el.style.backgroundColor = this.background;
+                    return this;
+                }
+            }),
+            
+            panelView : Backbone.View.extend({
+                className : "panelView",
+                initialize : function() {
+                    _.bindAll(this, "render");
+                },
+                render : function(parent) {
+                    
+                    var availibleEffects = [], e, i, anchor, li, that = this,
+                    
+                    //make the main collection switch to a new effect
+                    chooseEffect = function(e){
+                        //the model has a reference to the parent collection
+                        var parent = that.model.get("parent");
+                        //the index of the target
+                        var emptyIndex = parent.indexOf(that.model);
+                        //this gives us the effect name
+                        var effectToAdd = e.target.href.split("#")[1];
+                        //add new effect first at the calculated index and then remove the empty model to avoid rendering issues
+                        parent.add(new effects[effectToAdd].model(), {at: emptyIndex});
+                        parent.remove(that.model); 
+                    };
+                    
+                    //extract the availible effects
+                    for(e in effects){
+                        if(effects.hasOwnProperty(e) && e !== "empty" && e !== "renderKnob"){
+                            availibleEffects.push(e);
+                        }
+                    }
+                    
+                    //reset the element we're attaching to
+                    $(parent).html("");
+                    $(this.el).html("<ul>");
+                    
+                    //create a list of the availible affects and add it to the panel
+                    for(i = 0; i < availibleEffects.length; i++){
+                        li = document.createElement("li");
+                        anchor = document.createElement("a");
+                        anchor.href = "#"+availibleEffects[i];
+                        anchor.textContent = availibleEffects[i];
+                        anchor.onclick = chooseEffect;
+                        li.appendChild(anchor);
+                        $(this.el).append(li);
+                    }
+                    $(this.el).append("</ul>");
+                    $(parent).append(this.el);
+                    return this;
+                },
+                events : {
+                    "click" : "render"
+                }
+            })
+        },
+        
         delay : {
             
             model : Backbone.Model.extend({
@@ -33,7 +115,6 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                         src : this.model.get("src")
                     }));
                     this.el.style.backgroundColor = this.background;
-                    console.log("rendering delay");
                     return this;
                 }
             }),
@@ -50,8 +131,8 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     }));
                     $(parent).html("");
                     $(parent).append(this.el);
-                    effects.renderKnob($("#tempo"), "tempo", this.model, this.model.get("tempo"));
-                    effects.renderKnob($("#level"), "level", this.model, this.model.get("level"));
+                    effects.renderKnob($("#tempo"), "tempo", this.model, this.model.get("tempo") !== undefined ? this.model.get("tempo") : (1/200 * 90));
+                    effects.renderKnob($("#level"), "level", this.model, this.model.get("level") !== undefined ? this.model.get("level") : 1);
                     return this;
                 },
                 events : {
@@ -64,10 +145,6 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
         filter : {
             
             model : Backbone.Model.extend({
-                filterFreq : 440,
-                filterQ : 1,
-                filterGain : 1,
-                filterType : 0,
                 initialize : function() {
                     //_.bindAll(this, "changeFile");
                     this.set({
@@ -91,7 +168,6 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                         src : this.model.get("src")
                     }));
                     this.el.style.backgroundColor = this.background;
-                    console.log("rendering filter");
                     return this;
                 },
                 events : {
@@ -111,8 +187,8 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                     }));
                     $(parent).html("");
                     $(parent).append(this.el);
-                    effects.renderKnob($("#freq"), "freq", this.model, this.model.get("freq"));
-                    effects.renderKnob($("#q"), "q", this.model, this.model.get("q"));
+                    effects.renderKnob($("#freq"), "freq", this.model, this.model.get("freq") !== undefined ? this.model.get("freq") : (1/10000 * 440));
+                    effects.renderKnob($("#q"), "q", this.model, this.model.get("q") !== undefined ? this.model.get("q") : (1/15 * 1));
                     return this;
                 },
                 events : {
@@ -149,7 +225,6 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                         src : this.model.get("src")
                     }));
                     this.el.style.backgroundColor = this.background;
-                    console.log("rendering reverb");
                     return this;
                 },
                 events : {
@@ -205,7 +280,6 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                         src : this.model.get("src")
                     }));
                     this.el.style.backgroundColor = this.background;
-                    console.log("rendering volume");
                     return this;
                 },
                 events : {
@@ -261,7 +335,6 @@ define(["third-party/jquery", "third-party/jquery-ui", "third-party/underscore-m
                         src : this.model.get("src")
                     }));
                     this.el.style.backgroundColor = this.background;
-                    console.log("rendering compressor");
                     return this;
                 },
                 events : {
