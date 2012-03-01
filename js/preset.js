@@ -14,7 +14,6 @@ define(["effects", "backbone"], function(effects, Backbone) {
                 _.bindAll(this, "render");
                 this.collection.bind("add", this.render);
                 this.collection.bind("remove", this.render);
-
                 this.render();
             },
             render : function() {
@@ -33,7 +32,7 @@ define(["effects", "backbone"], function(effects, Backbone) {
                 });
                 emptySlots -= numberOfEffects;
                 if(emptySlots > 0) {
-                    this.collection.add(new effects.empty.model(this.collection));
+                    this.collection.add(new effects.empty.model(this.collection, effects));
                 }
                 
                 return this;
