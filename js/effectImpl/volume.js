@@ -1,8 +1,9 @@
 define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
     var volume = {
 
-        vol : 1,
+        
         model : Backbone.Model.extend({
+            localStorage : new Store("effectPreset"),
             initialize : function() {
                 this.set({
                     name : "volume",

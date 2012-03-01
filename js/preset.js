@@ -5,7 +5,7 @@ define(["effects", "backbone"], function(effects, Backbone) {
     var preset = {
 
         collection : Backbone.Collection.extend({
-
+            //localStorage : new Store("songBoxPreset")
         }),
 
         view : Backbone.View.extend({
@@ -29,6 +29,7 @@ define(["effects", "backbone"], function(effects, Backbone) {
                     effectView.render();
                     $(that.el).append(effectView.el);
                     numberOfEffects++;
+                    
                 });
                 emptySlots -= numberOfEffects;
                 if(emptySlots > 0) {

@@ -2,7 +2,7 @@ define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
     var delay = {
 
         model : Backbone.Model.extend({
-            delayTime : 0.5,
+            localStorage : new Store("effectPreset"),
             initialize : function() {
                 //_.bindAll(this, "changeFile");
                 this.set({

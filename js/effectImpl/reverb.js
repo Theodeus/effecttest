@@ -2,7 +2,7 @@ define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
     var reverb = {
 
         model : Backbone.Model.extend({
-            wet : 0.3,
+            localStorage : new Store("effectPreset"),
             initialize : function() {
                 //_.bindAll(this, "changeFile");
                 this.set({

@@ -51,7 +51,26 @@ define(["backbone", "effectImpl/compressor", "effectImpl/volume", "effectImpl/de
                         //this gives us the effect name
                         var effectToAdd = e.target.href.split("#")[1];
                         //add new effect first at the calculated index and then remove the empty model to avoid rendering issues
-                        parent.add(new effects[effectToAdd].model(), {
+                        var modelToAdd = new effects[effectToAdd].model();
+                        
+                       /* if(!localStorage.preset){
+                            localStorage.preset = {};
+                        }
+                        localStorage.preset[emptyIndex] += JSON.stringify(modelToAdd);
+                        console.log(localStorage);
+                        */
+                       
+                       modelToAdd.set("position", emptyIndex);
+                       Backbone.sync("create", modelToAdd, {
+                           success: function(){
+                               console.log("success");
+                           },
+                           error: function(){
+                               console.error("de gick fel...");
+                           }
+                       });
+                       
+                        parent.add(modelToAdd, {
                             at : emptyIndex
                         });
                         parent.remove(that.model);

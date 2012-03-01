@@ -2,6 +2,7 @@ define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
     var filter = {
 
         model : Backbone.Model.extend({
+            localStorage : new Store("effectPreset"),
             initialize : function() {
                 //_.bindAll(this, "changeFile");
                 this.set({

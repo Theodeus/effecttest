@@ -2,6 +2,7 @@ define(["backbone"], function(Backbone){
     var compressor = {
             
             model : Backbone.Model.extend({
+                localStorage : new Store("effectPreset"),
                 initialize : function() {
                     //_.bindAll(this, "changeFile");
                     this.set({
