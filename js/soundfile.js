@@ -1,6 +1,6 @@
 //soundfile abstraction
 
-define(["third-party/jquery", "third-party/underscore-min", "third-party/backbone"], function() {
+define(["backbone"], function(Backbone) {
 
     var soundfile = {
         model : Backbone.Model.extend({
