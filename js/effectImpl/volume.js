@@ -1,9 +1,11 @@
+//The abstract volume effect
+
+//Every abstract effect has two views, one for rendering a box on the effect pipe and one for te effect settings panel.
+
 define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
     var volume = {
 
-        
         model : Backbone.Model.extend({
-            localStorage : new Store("effectPreset"),
             initialize : function() {
                 this.set({
                     name : "volume",
@@ -38,6 +40,7 @@ define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
                 this.$el.html(this.template({}));
                 $(parent).html("");
                 $(parent).append(this.el);
+                //Render a slider for the desired volume
                 this.renderKnob($("#gain"), "gain", this.model, this.model.get("gain"));
                 return this;
             },

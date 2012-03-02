@@ -1,22 +1,23 @@
-//effect "superclass" and factory
-
-//knobs found at http://tutorialzine.com/2011/11/pretty-switches-css3-jquery/
+//This is where the abstract effects are being handled.
 
 define(["backbone", "effectImpl/compressor", "effectImpl/volume", "effectImpl/delay", "effectImpl/reverb", "effectImpl/filter"], function(Backbone, compressor, volume, delay, reverb, filter) {
 
     var effects = {
+        
+        //All effect types are defined in their own submodules...
         filter : filter,
         compressor : compressor,
         volume : volume,
         delay : delay,
         reverb : reverb,
+        
+        //..except for the empty one. This one needs to be able to dynamically loop trough the other effects to create the list of availible effects, and putting in it's own file creates an infinite dependency loop (since this file requires the empty.js file and the empty.js file requires effects.js)
         empty : {
             model : Backbone.Model.extend({
-                initialize : function(parent) {
+                initialize : function() {
                     this.set({
                         name : "empty",
-                        img : "img/empty.png",
-                        parent : parent
+                        img : "img/empty.png"
                     });
                 }
             }),
@@ -39,54 +40,48 @@ define(["backbone", "effectImpl/compressor", "effectImpl/volume", "effectImpl/de
                 initialize : function() {
                     _.bindAll(this, "render");
                 },
+                //This is where the empty effect differentiates from the other effects. We need to create a list of availible effects and define a listener for selecting effects.
                 render : function(parent) {
-                    var availibleEffects = [], e, i, anchor, li, that = this,
-
-                    //make the main collection switch to a new effect
-                    chooseEffect = function(e) {
-                        //the model has a reference to the parent collection
-                        var parent = that.model.get("parent");
-                        //the index of the target
+                    var availibleEffects = [],
+                        e,
+                        i,
+                        anchor,
+                        li,
+                        that = this,
+                    
+                    //Make the main collection switch to a new effect when an effect is selected 
+                    chooseEffect = function(event) {
+                        //Get a reference to the parent collection
+                        var parent = that.options.parent;
+                        //Get the index of the target
                         var emptyIndex = parent.indexOf(that.model);
-                        //this gives us the effect name
-                        var effectToAdd = e.target.href.split("#")[1];
-                        //add new effect first at the calculated index and then remove the empty model to avoid rendering issues
+                        //This gives us the effect name..
+                        var effectToAdd = event.target.href.split("#")[1];
+                        //Add the new effect first at the calculated index and then remove the empty model to avoid rendering issues
                         var modelToAdd = new effects[effectToAdd].model();
-                        
-                       /* if(!localStorage.preset){
-                            localStorage.preset = {};
-                        }
-                        localStorage.preset[emptyIndex] += JSON.stringify(modelToAdd);
-                        console.log(localStorage);
-                        */
-                       
-                       modelToAdd.set("position", emptyIndex);
-                       Backbone.sync("create", modelToAdd, {
-                           success: function(){
-                               console.log("success");
-                           },
-                           error: function(){
-                               console.error("de gick fel...");
-                           }
-                       });
-                       
                         parent.add(modelToAdd, {
                             at : emptyIndex
                         });
+                        //Make sure we save the position!
+                        modelToAdd.set("position", emptyIndex+1)
+                        modelToAdd.save();
+                        //Remove the empty model form the localStorage.
+                        that.model.destroy();
                         parent.remove(that.model);
                     };
-                    //extract the availible effects
+                    
+                    //Extract the availible effects
                     for(e in effects) {
-                        if(effects.hasOwnProperty(e) && e !== "empty" && e !== "renderKnob") {
+                        if(effects.hasOwnProperty(e) && e !== "empty") {
                             availibleEffects.push(e);
                         }
                     }
 
-                    //reset the element we're attaching to
+                    //Reset the element we're attaching to
                     $(parent).html("");
                     this.$el.html("<ul>");
 
-                    //create a list of the availible affects and add it to the panel
+                    //Create a list of the availible affects and add it to the panel
                     for( i = 0; i < availibleEffects.length; i++) {
                         li = document.createElement("li");
                         anchor = document.createElement("a");

@@ -1,8 +1,11 @@
+//The abstract delay effect
+
+//Every abstract effect has two views, one for rendering a box on the effect pipe and one for te effect settings panel.
+
 define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
     var delay = {
 
         model : Backbone.Model.extend({
-            localStorage : new Store("effectPreset"),
             initialize : function() {
                 //_.bindAll(this, "changeFile");
                 this.set({
@@ -35,6 +38,8 @@ define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
                 this.$el.html(this.template({}));
                 $(parent).html("");
                 $(parent).append(this.el);
+                
+                //Render sliders for setting the tempo and level of the delay.
                 this.renderKnob($("#tempo"), "tempo", this.model, this.model.get("tempo") !== undefined ? this.model.get("tempo") : (1 / 200 * 90));
                 this.renderKnob($("#level"), "level", this.model, this.model.get("level") !== undefined ? this.model.get("level") : 1);
                 return this;

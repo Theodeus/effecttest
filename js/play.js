@@ -1,16 +1,19 @@
-//playback functionallity
+//Playback functionallity, adds a mouse listener on the speaker as well as the keyboard
 
 define(["backbone"], function(Backbone) {
     var play = Backbone.View.extend({
+        
+        //Toggle play/stop
         playStop : function(e) {
-            console.log("play");
-            //return if it's not specebar being pressed
+            //Return if it's not specebar being pressed
             if(e.keyCode && e.keyCode !== 32) {
                 return;
             }
 
-            var effectNodes = [], effectNode;
-            //create an array with the effects we should add before playback begins
+            var effectNodes = [], 
+                effectNode;
+                
+            //Create an array from the collection with the effects we should add before playback begins
             for(var i = 0; i < this.presets.models.length; i++) {
                 effectNode = {
                     name : this.presets.models[i].get("name"),
@@ -18,7 +21,7 @@ define(["backbone"], function(Backbone) {
                 };
                 effectNodes.push(effectNode);
             }
-
+            
             this.startPlayback(effectNodes);
 
         },
@@ -28,7 +31,7 @@ define(["backbone"], function(Backbone) {
             this.presets = presets;
             this.$el = $("#play");
             
-            //add listeners for spacebar and click on the speaker
+            //Add listeners for spacebar and click on the speaker
             document.addEventListener("keydown", this.playStop);
             this.render(); 
         },

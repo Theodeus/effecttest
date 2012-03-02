@@ -1,5 +1,5 @@
-//main router, imports it's dependencies via require.js
+//The starting point for the app. Just inits the whole thing.
     require(["app"], function(app) {
-        
-      var thread = new app().init(); 
+        //fire!     
+        var thread = new app().init(); 
     });

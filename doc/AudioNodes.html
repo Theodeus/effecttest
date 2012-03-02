@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>AudioNodes.js</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="AudioNodes.html">AudioNodes.js</a>
+          <a class="source" href="app.html">app.js</a>
+          <a class="source" href="backbone.html">backbone.js</a>
+          <a class="source" href="effects.html">effects.js</a>
+          <a class="source" href="main.html">main.js</a>
+          <a class="source" href="order.html">order.js</a>
+          <a class="source" href="patch.html">patch.js</a>
+          <a class="source" href="play.html">play.js</a>
+          <a class="source" href="soundfile.html">soundfile.js</a>
+          <a class="source" href="ui.html">ui.js</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>AudioNodes.js</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="kd">var</span> <span class="nx">AudioNodes</span> <span class="o">=</span> <span class="nx">AudioNodes</span> <span class="o">||</span> <span class="p">{};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>A distortion node with an input level. </p>
+
+<p>HIHIHISKRIVA BÄTTRE DOC </p>
+
+<p>@class Distortion
+@param gain {Number} The level into the distortion unit
+@param curve {Number} range -1 to 1
+@return {AudioNode} The distortion node</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Distortion</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">gain</span><span class="p">,</span> <span class="nx">curve</span><span class="p">)</span> <span class="p">{</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>normalize input</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">curve</span><span class="p">)){</span>
+        <span class="nx">curve</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">curve</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="nx">curve</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">curve</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">curve</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">gain</span><span class="p">)){</span>
+        <span class="nx">gain</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">gain</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="nx">gain</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">gain</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">gain</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>nodes</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="kd">var</span> <span class="nx">distortion</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createWaveShaper</span><span class="p">(),</span> 
+    <span class="nx">input</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">();</span> 
+    </pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>ROUTING</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="nx">input</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">distortion</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">output</span> <span class="o">=</span> <span class="nx">distortion</span><span class="p">;</span>
+    
+    
+    <span class="k">this</span><span class="p">.</span><span class="nx">setGain</span><span class="p">(</span><span class="nx">gain</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setShape</span><span class="p">(</span><span class="nx">curve</span><span class="p">);</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>Connects the distortion to another node.</p>
+
+<p>@method connect
+@param target {AudioNode} The node the distortion should connect its output to</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Distortion</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">output</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>Sets the level into the distortion unit.</p>
+
+<p>@method setGain
+@param value {Number} The gain ranging from 0 to 1</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Distortion</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setGain</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">input</span><span class="p">.</span><span class="nx">gain</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Sets the distortion curve.</p>
+
+<p>@method setShape
+@param shape {Number} The desired shape, ranging from -1 to 1</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Distortion</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setShape</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">shape</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">shape</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">shape</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="nx">shape</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">shape</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>this.output.shape.value = shape;</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>A filter node with seven different basic behaviours.</p>
+
+<p>highpass &ndash; Lets frequencies above the cutoff frequency trough.
+     Params:
+         freqency &ndash; the cutoff frequency below which the frequencies get attenuated.
+         q &ndash; controlls how peaked the response will be at the frequency. Higher value = more peaked response.</p>
+
+<p>lowpass &ndash; Lets frequencies below the cutoff frequency trough.
+     Params:
+         freqency &ndash; the cutoff frequency above which the frequencies get attenuated.
+         q &ndash; controlls how peaked the response will be at the frequency. Higher value = more peaked response.</p>
+
+<p>bandpass &ndash; Lets a group of frequencies trough, centering at the provided frequecy.
+     Params:
+         freqency &ndash; the center of the frequency band.
+         q &ndash; controlls the width of the band. The band narrows as the q-value increases.</p>
+
+<p>lowshelf &ndash; Lets all frequencies trough, but boosts the lower frequencies
+     Params:
+         freqency &ndash; the upper limit of the frequencies to be boosted/attenuated.
+         gain &ndash; the boost in dB to be applied.</p>
+
+<p>highshelf &ndash; The opposite of the lowshelf, boosts the higher frequencies.
+     Params:
+         freqency &ndash; the lower limit of the frequencies to be boosted/attenuated.
+         gain &ndash; the boost in dB to be applied.</p>
+
+<p>peaking &ndash; Lets all frequencies trough and boosts/attenuates the specified frequecy.
+     Params:
+         freqency &ndash; the center frequency of where the boost is applied
+         q &ndash; the width of the band of frequencies that are boosted. Higher value = narrower band.
+         gain &ndash; the amount to be boosted in dB.</p>
+
+<p>notch &ndash; The opposite of the bandpass filter. It don&rsquo;t let the frequecies centering at the provided frequency trough, but all others.
+     Params:
+         freqency &ndash; the center frequency where the notch is applied
+         q &ndash; controlls the band width where the notch is applied. Higher value = narrower band.</p>
+
+<p>allpass &ndash; Lets all frequencies trough but changes the phase relationship between the frequencies.
+     Params:
+         freqency &ndash; the frequency where the phase transition occurs.
+         q &ndash; controlls how sharp the phase trasition is at the center of the frequency. Higher value = sharper trasition.</p>
+
+<p>@class Filter
+@param type {String} one of the above types, for example &ldquo;highpass&rdquo;.
+@param parameters {Object} an object containing the above specified parameters for the choosen filter type.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Filter</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">parameters</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">filter</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createBiquadFilter</span><span class="p">(),</span> 
+        <span class="nx">entryNode</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> 
+        <span class="nx">output</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> 
+        <span class="nx">type</span> <span class="o">=</span> <span class="nx">type</span> <span class="o">||</span> <span class="s2">&quot;lowpass&quot;</span><span class="p">,</span> 
+        <span class="nx">frequency</span> <span class="o">=</span> <span class="nx">parameters</span><span class="p">.</span><span class="nx">frequency</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">?</span> <span class="mi">440</span> <span class="o">:</span> <span class="nx">parameters</span><span class="p">.</span><span class="nx">frequency</span><span class="p">,</span> 
+        <span class="nx">q</span> <span class="o">=</span> <span class="nx">parameters</span><span class="p">.</span><span class="nx">q</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="nx">parameters</span><span class="p">.</span><span class="nx">q</span><span class="p">,</span> 
+        <span class="nx">gain</span> <span class="o">=</span> <span class="nx">parameters</span><span class="p">.</span><span class="nx">gain</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="nx">entryNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">filter</span><span class="p">);</span>
+    <span class="nx">filter</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">output</span><span class="p">);</span>
+
+    <span class="nx">filter</span><span class="p">.</span><span class="nx">Q</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">q</span><span class="p">;</span>
+    <span class="nx">filter</span><span class="p">.</span><span class="nx">gain</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">gain</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">filter</span> <span class="o">=</span> <span class="nx">filter</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">entryNode</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">output</span> <span class="o">=</span> <span class="nx">output</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">q</span> <span class="o">=</span> <span class="nx">filter</span><span class="p">.</span><span class="nx">Q</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">frequency</span> <span class="o">=</span> <span class="nx">filter</span><span class="p">.</span><span class="nx">frequency</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">gain</span> <span class="o">=</span> <span class="nx">filter</span><span class="p">.</span><span class="nx">gain</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span><span class="p">;</span>
+    
+    <span class="k">this</span><span class="p">.</span><span class="nx">setFilterType</span><span class="p">(</span><span class="nx">type</span><span class="p">);</span>
+    
+    <span class="nx">frequency</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">frequency</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
+    <span class="nx">frequency</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">frequency</span><span class="p">,</span> <span class="mi">10000</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">setFrequency</span><span class="p">(</span><span class="nx">frequency</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">filter</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Found no filter of type: &quot;</span> <span class="o">+</span> <span class="nx">type</span> <span class="o">+</span> <span class="s2">&quot;, setting to lowpass&quot;</span><span class="p">);</span>
+        <span class="nx">filter</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>Connects the filter to another node.</p>
+
+<p>@method connect
+@param target {AudioNode} The node the filter should connect its output to</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Filter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">output</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
+        </div>
+        <p>Change the Q value</p>
+
+<p>@method setQ
+@param value {Number} The desired Q value</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Filter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setQ</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">Q</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>Change the gain value</p>
+
+<p>@method setGain
+@param value {Number} The desired gain value</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Filter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setGain</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="o">-</span><span class="mi">46</span><span class="p">);</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="mi">6</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">gain</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
+        </div>
+        <p>Change the frequency value</p>
+
+<p>@method setFrequency
+@param value {Number} The desired frequency value</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Filter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setFrequency</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="mi">20000</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">frequency</span><span class="p">.</span><span class="nx">cancelScheduledValues</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">frequency</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">frequency</span><span class="p">.</span><span class="nx">setValueAtTime</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">context</span><span class="p">.</span><span class="nx">currentTime</span><span class="p">);</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>Change the filter type</p>
+
+<p>@method setFilterType
+@param type {String} The filter type, as described above</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Filter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setFilterType</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>check if we got a number</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">type</span><span class="p">)){</span>
+        <span class="nx">type</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="nx">type</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">type</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">type</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>       
+    <span class="p">}</span>
+    
+    <span class="kd">var</span> <span class="nx">freqNow</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">type</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">filterTypes</span><span class="p">[</span><span class="nx">type</span><span class="p">];</span>
+    <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">filter</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Found no filter of type: &quot;</span> <span class="o">+</span> <span class="nx">type</span> <span class="o">+</span> <span class="s2">&quot;, no change made&quot;</span><span class="p">);</span>
+        <span class="nx">filter</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">freqNow</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Filter</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">filterTypes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">lowpass</span> <span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nx">highpass</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nx">bandpass</span> <span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="nx">lowshelf</span> <span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="nx">highshelf</span> <span class="o">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nx">peaking</span> <span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="nx">notch</span> <span class="o">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="nx">allpass</span> <span class="o">:</span> <span class="mi">7</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-17'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-17">&#182;</a>
+        </div>
+        <p>A stero delay. (Include routing?)</p>
+
+<p>@class StereoDelay
+@param context {Object} The current audio context
+@param tempo {int} (Optional) The tempo to set the delay to in beats per minute (default 90bpn)
+@param subdivision {String} (Optional) The wanted subdivision. The possible values are:
+ &ldquo;32nd note&rdquo;, &ldquo;16th note triplet&rdquo;, &ldquo;dotted 32nd note&rdquo;, &ldquo;16th note&rdquo;, &ldquo;8th note triplet&rdquo;,
+ &ldquo;dotted 16th note&rdquo;, &ldquo;8th note&rdquo;, &ldquo;quarter note triplet&rdquo;, &ldquo;dotted eighth note&rdquo;, &ldquo;quarter note&rdquo;
+ &ldquo;half note triplet&rdquo;. &ldquo;dotted quarter note&rdquo;, &ldquo;half note&rdquo;
+ (default &ldquo;dotted eigth note&rdquo;)
+@param secondDivision {String} (Optional) Pass a second subdivision string to use two different subdivisions for the two delay nodes.
+@return {AudioNode} The stereo delay</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">StereoDelay</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">tempo</span><span class="p">,</span> <span class="nx">subdivision</span><span class="p">,</span> <span class="nx">secondDivision</span><span class="p">)</span> <span class="p">{</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
+        </div>
+        <p>nodes</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="kd">var</span> <span class="nx">bpmDelay1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">BpmDelay</span><span class="p">(</span><span class="nx">context</span><span class="p">),</span> <span class="nx">bpmDelay2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">BpmDelay</span><span class="p">(</span><span class="nx">context</span><span class="p">),</span> <span class="nx">delayFeedback1</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> <span class="nx">delayFeedback2</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> <span class="nx">delayPanLeft</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createPanner</span><span class="p">(),</span> <span class="nx">delayPanRight</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createPanner</span><span class="p">(),</span> <span class="nx">leftSplitter</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createChannelSplitter</span><span class="p">(),</span> <span class="nx">rightSplitter</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createChannelSplitter</span><span class="p">(),</span> <span class="nx">merger</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createChannelMerger</span><span class="p">(),</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> <span class="nx">preDelayNode</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> <span class="nx">postDelayNode</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> <span class="nx">entryNode</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> <span class="nx">delayWet</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">();</span>
+
+    <span class="nx">delayPanLeft</span><span class="p">.</span><span class="nx">setPosition</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="nx">delayPanRight</span><span class="p">.</span><span class="nx">setPosition</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="nx">delayFeedback1</span><span class="p">.</span><span class="nx">gain</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+    <span class="nx">delayFeedback2</span><span class="p">.</span><span class="nx">gain</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">tempo</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">tempo</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">tempo</span><span class="p">,</span> <span class="mi">40</span><span class="p">);</span>
+        <span class="nx">tempo</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">tempo</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span> 
+        <span class="nx">bpmDelay1</span><span class="p">.</span><span class="nx">setTempo</span><span class="p">(</span><span class="nx">tempo</span><span class="p">);</span>
+        <span class="nx">bpmDelay2</span><span class="p">.</span><span class="nx">setTempo</span><span class="p">(</span><span class="nx">tempo</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">bpmDelay1</span><span class="p">.</span><span class="nx">setTempo</span><span class="p">(</span><span class="mi">90</span><span class="p">);</span>
+        <span class="nx">bpmDelay2</span><span class="p">.</span><span class="nx">setTempo</span><span class="p">(</span><span class="mi">90</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">subdivision</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">bpmDelay1</span><span class="p">.</span><span class="nx">setDelayValue</span><span class="p">(</span><span class="nx">subdivision</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">secondDivision</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">bpmDelay2</span><span class="p">.</span><span class="nx">setDelayValue</span><span class="p">(</span><span class="nx">secondDivision</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">bpmDelay2</span><span class="p">.</span><span class="nx">setDelayValue</span><span class="p">(</span><span class="nx">subdivision</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">bpmDelay1</span><span class="p">.</span><span class="nx">setDelayValue</span><span class="p">(</span><span class="s2">&quot;dotted eighth note&quot;</span><span class="p">);</span>
+        <span class="nx">bpmDelay2</span><span class="p">.</span><span class="nx">setDelayValue</span><span class="p">(</span><span class="s2">&quot;dotted eighth note&quot;</span><span class="p">);</span>
+    <span class="p">}</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-19'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-19">&#182;</a>
+        </div>
+        <p>ROUTING</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="nx">entryNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">output</span><span class="p">);</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-20'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-20">&#182;</a>
+        </div>
+        <p>delay line</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="nx">entryNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">preDelayNode</span><span class="p">);</span>
+    <span class="nx">preDelayNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">bpmDelay1</span><span class="p">.</span><span class="nx">delay</span><span class="p">);</span>
+    <span class="nx">bpmDelay1</span><span class="p">.</span><span class="nx">delay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">delayFeedback1</span><span class="p">);</span>
+    <span class="nx">delayFeedback1</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">bpmDelay2</span><span class="p">.</span><span class="nx">delay</span><span class="p">);</span>
+    <span class="nx">bpmDelay2</span><span class="p">.</span><span class="nx">delay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">rightSplitter</span><span class="p">);</span>
+    <span class="nx">bpmDelay2</span><span class="p">.</span><span class="nx">delay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">delayFeedback2</span><span class="p">);</span>
+    <span class="nx">delayFeedback2</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">preDelayNode</span><span class="p">);</span>
+    <span class="nx">bpmDelay1</span><span class="p">.</span><span class="nx">delay</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">leftSplitter</span><span class="p">);</span>
+    <span class="nx">leftSplitter</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">merger</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="nx">rightSplitter</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">merger</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">merger</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">delayWet</span><span class="p">);</span>
+    <span class="nx">delayWet</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">output</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">entryNode</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">output</span> <span class="o">=</span> <span class="nx">output</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">=</span> <span class="nx">delayWet</span><span class="p">;</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">delay1</span> <span class="o">=</span> <span class="nx">bpmDelay1</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">delay2</span> <span class="o">=</span> <span class="nx">bpmDelay2</span><span class="p">;</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-21'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-21">&#182;</a>
+        </div>
+        <p>Connects the stereo delay to another node.</p>
+
+<p>@method connect
+@param target {AudioNode} The node the delay should connect its output to</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">StereoDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">output</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-22'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-22">&#182;</a>
+        </div>
+        <p>Sets the level (wet) of the delay.</p>
+
+<p>@method setLevel
+@param level {Number} The desired wet level of the delay, 0-1</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">StereoDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setLevel</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">level</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">level</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">level</span><span class="p">);</span>
+    <span class="nx">level</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">level</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">level</span><span class="p">.</span><span class="nx">gain</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">level</span><span class="p">;</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-23'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-23">&#182;</a>
+        </div>
+        <p>Sets the beats per minute (bpm) of the delay.</p>
+
+<p>@method setTempo
+@param tempo {int} The desired bpm of the delay
+@param secondTempo {int} an optional second tempo to use on the second of the two delay nodes</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">StereoDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setTempo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">tempo</span><span class="p">,</span> <span class="nx">secondTempo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">tempo</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">delay1</span><span class="p">.</span><span class="nx">setTempo</span><span class="p">(</span><span class="nx">tempo</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">secondTempo</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">delay2</span><span class="p">.</span><span class="nx">setTempo</span><span class="p">(</span><span class="nx">secondTempo</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">delay2</span><span class="p">.</span><span class="nx">setTempo</span><span class="p">(</span><span class="nx">tempo</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;trying to set stero delay tempo without providing a tempo!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-24'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-24">&#182;</a>
+        </div>
+        <p>Sets the desired subdivision of the delay.</p>
+
+<p>The possible values are:
+&ldquo;32nd note&rdquo;,
+&ldquo;16th note triplet&rdquo;,
+&ldquo;dotted 32nd note&rdquo;,
+&ldquo;16th note&rdquo;,
+&ldquo;8th note triplet&rdquo;,
+&ldquo;dotted 16th note&rdquo;,
+&ldquo;8th note&rdquo;,
+&ldquo;quarter note triplet&rdquo;,
+&ldquo;dotted eighth note&rdquo;,
+&ldquo;quarter note&rdquo;
+&ldquo;half note triplet&rdquo;
+&ldquo;dotted quarter note&rdquo;
+&ldquo;half note&rdquo;</p>
+
+<p>@method setSubdivision
+@param subdivision {String} The desired subdivision of the delay</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">StereoDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setSubdivision</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">subdivision</span><span class="p">,</span> <span class="nx">secondSubdivision</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">subdivision</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">delay1</span><span class="p">.</span><span class="nx">setDelayValue</span><span class="p">(</span><span class="nx">subdivision</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">secondSubdivision</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">delay2</span><span class="p">.</span><span class="nx">setDelayValue</span><span class="p">(</span><span class="nx">secondSubdivision</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">delay2</span><span class="p">.</span><span class="nx">setDelayValue</span><span class="p">(</span><span class="nx">subdivision</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-25'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-25">&#182;</a>
+        </div>
+        <p>A convolver unit. It can take either a string or a AudioBuffer as an argument. If it&rsquo;s a string the convolver will try to load a buffer using the string as an url.
+If it&rsquo;s a buffer the convolver will use it as its impulse response.</p>
+
+<p>@class Convolver
+@param impulse {String/AudioBuffer} Either an url or a buffer, as explained above.
+@param level {Number} The level of the convolver, 0-1</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Convolver</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">impulse</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">convolver</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createConvolver</span><span class="p">(),</span> 
+        <span class="nx">entryNode</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span> 
+        <span class="nx">output</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">(),</span>
+        <span class="nx">wet</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createGainNode</span><span class="p">();</span>
+
+    <span class="k">if</span><span class="p">(</span> <span class="k">typeof</span> <span class="nx">impulse</span> <span class="o">===</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+        <span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="nx">impulse</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+        <span class="nx">xhr</span><span class="p">.</span><span class="nx">responseType</span> <span class="o">=</span> <span class="s2">&quot;arraybuffer&quot;</span><span class="p">;</span>
+        <span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">&lt;</span> <span class="mi">300</span> <span class="o">&amp;&amp;</span> <span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">&gt;</span> <span class="mi">199</span> <span class="o">||</span> <span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">302</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">context</span><span class="p">.</span><span class="nx">decodeAudioData</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">response</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="nx">convolver</span><span class="p">.</span><span class="nx">buffer</span> <span class="o">=</span> <span class="nx">buffer</span><span class="p">;</span>
+                    <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">&quot;error decoding data: &quot;</span> <span class="o">+</span> <span class="nx">e</span><span class="p">);</span>
+                        <span class="p">}</span>
+                    <span class="p">});</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">};</span>
+        <span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">convolver</span><span class="p">.</span><span class="nx">buffer</span> <span class="o">=</span> <span class="nx">impulse</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">entryNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">convolver</span><span class="p">);</span>
+    <span class="nx">entryNode</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">output</span><span class="p">);</span>
+    <span class="nx">convolver</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">wet</span><span class="p">);</span>
+    <span class="nx">wet</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">output</span><span class="p">);</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">entryNode</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">output</span> <span class="o">=</span> <span class="nx">output</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">=</span> <span class="nx">wet</span><span class="p">;</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-26'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-26">&#182;</a>
+        </div>
+        <p>Connects the convolver to another node.</p>
+
+<p>@method connect
+@param target {AudioNode} The node the convolver should connect its output to</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Convolver</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">connect</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">output</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-27'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-27">&#182;</a>
+        </div>
+        <p>Sets the level (wet) of the convolver.</p>
+
+<p>@method setLevel
+@param level {Number} The desired wet level of the covolver, 0-1</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">Convolver</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setLevel</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">level</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">level</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">level</span><span class="p">);</span>
+    <span class="nx">level</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">level</span><span class="p">);</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">level</span><span class="p">.</span><span class="nx">gain</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">level</span><span class="p">;</span>
+<span class="p">};</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-28'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-28">&#182;</a>
+        </div>
+        <p>Copyright 2011, Google Inc.
+All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:</p>
+
+<pre><code>* Redistributions of source code must retain the above copyright
+</code></pre>
+
+<p>notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above
+copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials provided with the
+distribution.
+    * Neither the name of Google Inc. nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.</p>
+
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+&ldquo;AS IS&rdquo; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">BpmDelay</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">delay</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createDelayNode</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">context</span> <span class="o">=</span> <span class="nx">context</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">tempo</span> <span class="o">=</span> <span class="mi">120</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">noteDivision</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">times</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">updateDelayTime</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">BpmDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setTempo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">tempo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">tempo</span> <span class="o">=</span> <span class="nx">tempo</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">updateDelayTime</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">BpmDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setDelayValue</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;32nd note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;16th note triplet&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;dotted 32nd note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;16th note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;8th note triplet&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;dotted 16th note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;8th note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;quarter note triplet&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;dotted eighth note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;quarter note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;half note triplet&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;dotted quarter note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nx">v</span> <span class="o">==</span> <span class="s2">&quot;half note&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">i</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;bad BPM index&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">setDelayIndex</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">BpmDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">setDelayIndex</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">noteDivision</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">times</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">updateDelayTime</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">BpmDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">updateDelayTime</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">delayTime</span> <span class="o">=</span> <span class="mf">0.37299</span> <span class="o">/</span> <span class="mf">44100.0</span> <span class="o">+</span> <span class="mi">60</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">noteDivision</span> <span class="o">/</span> <span class="k">this</span><span class="p">.</span><span class="nx">tempo</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">delay</span><span class="p">.</span><span class="nx">delayTime</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">delayTime</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">AudioNodes</span><span class="p">.</span><span class="nx">BpmDelay</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">8</span><span class="p">.,</span> <span class="c1">// 32nd note</span>
+<span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">.)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">.,</span> <span class="c1">// 16th note triplet</span>
+<span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">8</span><span class="p">.)</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">.,</span> <span class="c1">// dotted 32nd note</span>
+<span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">.,</span> <span class="c1">// 16th note</span>
+<span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">.)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">.,</span> <span class="c1">// 8th note triplet</span>
+<span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">4</span><span class="p">.)</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">.,</span> <span class="c1">// dotted 16th note</span>
+<span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">.,</span> <span class="c1">// 8th note</span>
+<span class="mi">1</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">.,</span> <span class="c1">// quarter note triplet</span>
+<span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">.)</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">.,</span> <span class="c1">// dotted eighth note</span>
+<span class="mi">1</span><span class="p">,</span> <span class="c1">// quarter note</span>
+<span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">3</span><span class="p">.,</span> <span class="c1">// half note triplet</span>
+<span class="mi">1</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span><span class="p">.,</span> <span class="c1">// dotted quarter note</span>
+<span class="mi">2</span>               <span class="c1">// half note</span>
+<span class="p">];</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

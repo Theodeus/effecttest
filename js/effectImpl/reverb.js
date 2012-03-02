@@ -1,10 +1,12 @@
+//The abstract reverb effect
+
+//Every abstract effect has two views, one for rendering a box on the effect pipe and one for te effect settings panel.
+
 define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
     var reverb = {
 
         model : Backbone.Model.extend({
-            localStorage : new Store("effectPreset"),
             initialize : function() {
-                //_.bindAll(this, "changeFile");
                 this.set({
                     name : "reverb",
                     img : "img/reverb.png"
@@ -38,6 +40,7 @@ define(["backbone", "effectImpl/panelView"], function(Backbone, panel) {
                 this.$el.html(this.template({}));
                 $(parent).html("");
                 $(parent).append(this.el);
+                //Render a slider for the amount of reverb to be applied
                 this.renderKnob($("#level"), "level", this.model, this.model.get("level"));
                 return this;
             },

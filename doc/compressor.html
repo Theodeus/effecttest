@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>compressor.js</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="compressor.html">compressor.js</a>
+          <a class="source" href="delay.html">delay.js</a>
+          <a class="source" href="filter.html">filter.js</a>
+          <a class="source" href="panelView.html">panelView.js</a>
+          <a class="source" href="reverb.html">reverb.js</a>
+          <a class="source" href="volume.html">volume.js</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>compressor.js</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>The abstract compressor effect</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Every abstract effect has two views, one for rendering a box on the effect pipe and one for te effect settings panel.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">define</span><span class="p">([</span><span class="s2">&quot;backbone&quot;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">){</span>
+    <span class="kd">var</span> <span class="nx">compressor</span> <span class="o">=</span> <span class="p">{</span>
+            
+            <span class="nx">model</span> <span class="o">:</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">Model</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+                <span class="nx">initialize</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">({</span>
+                        <span class="nx">name</span> <span class="o">:</span> <span class="s2">&quot;compressor&quot;</span><span class="p">,</span>
+                        <span class="nx">img</span> <span class="o">:</span> <span class="s2">&quot;img/compressor.png&quot;</span>
+                    <span class="p">});</span>
+                <span class="p">}</span>
+            <span class="p">}),</span>
+            
+            <span class="nx">boxView</span> <span class="o">:</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+                <span class="nx">className</span> <span class="o">:</span> <span class="s2">&quot;boxView compressor&quot;</span><span class="p">,</span>
+                <span class="nx">background</span> <span class="o">:</span> <span class="s2">&quot;#afa&quot;</span><span class="p">,</span>
+                <span class="nx">initialize</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;render&quot;</span><span class="p">);</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">);</span>
+                <span class="p">},</span>
+                <span class="nx">render</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">backgroundColor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">background</span><span class="p">;</span>
+                    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="nx">events</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;click&quot;</span> <span class="o">:</span> <span class="s2">&quot;render&quot;</span>
+                <span class="p">}</span>
+            <span class="p">}),</span>
+            
+            <span class="nx">panelView</span> <span class="o">:</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+                <span class="nx">className</span> <span class="o">:</span> <span class="s2">&quot;panelView&quot;</span><span class="p">,</span>
+                <span class="nx">initialize</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+                    <span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;render&quot;</span><span class="p">);</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">template</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="s2">&quot;&lt;p&gt;There&#39;s no settings to be made in the Web Audio implementation at the moment.&lt;/p&gt;&quot;</span><span class="p">);</span>
+                <span class="p">},</span>
+                <span class="nx">render</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">template</span><span class="p">({}));</span>
+                    <span class="nx">$</span><span class="p">(</span><span class="nx">parent</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+                    <span class="nx">$</span><span class="p">(</span><span class="nx">parent</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">);</span>
+                    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+                <span class="p">},</span>
+                <span class="nx">events</span> <span class="o">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;click&quot;</span> <span class="o">:</span> <span class="s2">&quot;render&quot;</span>
+                <span class="p">}</span>
+            <span class="p">})</span>
+        <span class="p">};</span>
+        <span class="k">return</span> <span class="nx">compressor</span><span class="p">;</span>
+        
+<span class="p">});</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

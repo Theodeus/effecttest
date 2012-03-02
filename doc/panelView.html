@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>panelView.js</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="compressor.html">compressor.js</a>
+          <a class="source" href="delay.html">delay.js</a>
+          <a class="source" href="filter.html">filter.js</a>
+          <a class="source" href="panelView.html">panelView.js</a>
+          <a class="source" href="reverb.html">reverb.js</a>
+          <a class="source" href="volume.html">volume.js</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>panelView.js</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>This a kind of effect-view superclass that houses the renderer for effect settings sliders.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>I&rsquo;m using jQuery UI for the sliders.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">define</span><span class="p">([</span><span class="s2">&quot;backbone&quot;</span><span class="p">,</span> <span class="s2">&quot;ui&quot;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">,</span> <span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">panelView</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+                
+        <span class="nx">renderKnob</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">parameter</span><span class="p">,</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">value</span><span class="p">){</span>
+             <span class="nx">$</span><span class="p">(</span><span class="nx">target</span><span class="p">).</span><span class="nx">slider</span><span class="p">({</span>
+                <span class="nx">orientation</span><span class="o">:</span> <span class="s2">&quot;vertical&quot;</span><span class="p">,</span>
+                <span class="nx">range</span><span class="o">:</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span>
+                <span class="nx">step</span><span class="o">:</span> <span class="mf">0.001</span><span class="p">,</span>
+                <span class="nx">min</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="nx">max</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="nx">value</span><span class="o">:</span> <span class="nx">value</span> <span class="o">===</span> <span class="kc">undefined</span> <span class="o">?</span> <span class="mf">0.5</span> <span class="o">:</span> <span class="nx">value</span><span class="p">,</span>
+                <span class="nx">slide</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">ui</span> <span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">model</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">parameter</span><span class="p">,</span> <span class="nx">ui</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Make sure we save the setting we make in the localStorage</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                    <span class="nx">model</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+                <span class="p">}</span>
+            <span class="p">});</span>
+    
+        <span class="p">}</span> 
+
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">panelView</span><span class="p">;</span>
+<span class="p">});</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

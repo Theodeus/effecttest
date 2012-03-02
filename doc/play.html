@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>play.js</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="AudioNodes.html">AudioNodes.js</a>
+          <a class="source" href="app.html">app.js</a>
+          <a class="source" href="backbone.html">backbone.js</a>
+          <a class="source" href="effects.html">effects.js</a>
+          <a class="source" href="main.html">main.js</a>
+          <a class="source" href="order.html">order.js</a>
+          <a class="source" href="patch.html">patch.js</a>
+          <a class="source" href="play.html">play.js</a>
+          <a class="source" href="soundfile.html">soundfile.js</a>
+          <a class="source" href="ui.html">ui.js</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>play.js</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Playback functionallity, adds a mouse listener on the speaker as well as the keyboard</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nx">define</span><span class="p">([</span><span class="s2">&quot;backbone&quot;</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">Backbone</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">play</span> <span class="o">=</span> <span class="nx">Backbone</span><span class="p">.</span><span class="nx">View</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+        </pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Toggle play/stop</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="nx">playStop</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Return if it&rsquo;s not specebar being pressed</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">if</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">&amp;&amp;</span> <span class="nx">e</span><span class="p">.</span><span class="nx">keyCode</span> <span class="o">!==</span> <span class="mi">32</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="kd">var</span> <span class="nx">effectNodes</span> <span class="o">=</span> <span class="p">[],</span> 
+                <span class="nx">effectNode</span><span class="p">;</span>
+                </pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Create an array from the collection with the effects we should add before playback begins</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">presets</span><span class="p">.</span><span class="nx">models</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">effectNode</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="nx">name</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">presets</span><span class="p">.</span><span class="nx">models</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span>
+                    <span class="nx">params</span> <span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">presets</span><span class="p">.</span><span class="nx">models</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">attributes</span>
+                <span class="p">};</span>
+                <span class="nx">effectNodes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">effectNode</span><span class="p">);</span>
+            <span class="p">}</span>
+            
+            <span class="k">this</span><span class="p">.</span><span class="nx">startPlayback</span><span class="p">(</span><span class="nx">effectNodes</span><span class="p">);</span>
+
+        <span class="p">},</span>
+        <span class="nx">initialize</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">startPlayback</span><span class="p">,</span> <span class="nx">presets</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">_</span><span class="p">.</span><span class="nx">bindAll</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&quot;playStop&quot;</span><span class="p">,</span> <span class="s2">&quot;render&quot;</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">startPlayback</span> <span class="o">=</span> <span class="nx">startPlayback</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">presets</span> <span class="o">=</span> <span class="nx">presets</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$el</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#play&quot;</span><span class="p">);</span>
+            </pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Add listeners for spacebar and click on the speaker</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;keydown&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">playStop</span><span class="p">);</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">render</span><span class="p">();</span> 
+        <span class="p">},</span>
+        <span class="nx">events</span> <span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;click&quot;</span> <span class="o">:</span> <span class="s2">&quot;playStop&quot;</span>
+        <span class="p">},</span>
+        <span class="nx">render</span> <span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">$el</span><span class="p">.</span><span class="nx">css</span><span class="p">(</span><span class="s2">&quot;background-image&quot;</span><span class="p">,</span> <span class="s2">&quot;url(&#39;img/speaker.png&#39;)&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">play</span><span class="p">;</span>
+<span class="p">});</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

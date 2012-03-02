@@ -1,10 +1,12 @@
+//The abstract compressor effect
+
+//Every abstract effect has two views, one for rendering a box on the effect pipe and one for te effect settings panel.
+
 define(["backbone"], function(Backbone){
     var compressor = {
             
             model : Backbone.Model.extend({
-                localStorage : new Store("effectPreset"),
                 initialize : function() {
-                    //_.bindAll(this, "changeFile");
                     this.set({
                         name : "compressor",
                         img : "img/compressor.png"
