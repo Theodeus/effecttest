@@ -36,7 +36,6 @@ define(["soundfile", "play", "patch", "backbone", "AudioNodes"], function(soundf
             presets.fetch();
             //Sort them if so. This needs to be done in order for the effects to appear at the propper positions in the GUI (and in the audible effect chain too)
             presets.models = _.sortBy(presets.models, function(model){
-                console.log(model.get("position"));
                 return model.get("position");
             });
 
