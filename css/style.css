@@ -64,6 +64,8 @@ h1{
 .songView:hover{
     background-color: #fed;
     cursor: pointer;
+    -webkit-user-select: none;
+    user-select:none;
 }
 
 .boxView{
