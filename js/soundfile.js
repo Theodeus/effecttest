@@ -2,6 +2,83 @@
 
 define(["backbone"], function(Backbone) {
 
+    var externalSongSelectView = Backbone.View.extend( {            
+            m_soundfileView:null,
+            m_model:null,
+
+            initialize: function(a_soundfileView,a_model) {
+                m_soundfileView = a_soundfileView;
+                this.m_model = a_model;                
+                
+                this.m_fileHandler = document.createElement("input");
+                this.m_fileHandler.setAttribute("type","file");
+                var f_that = this;
+                //event onchange !    
+                this.m_fileHandler.addEventListener("change",function() { f_that.ChangeExternalSong() } );           
+                //this.render();
+            },
+
+            m_fileHandler:null,
+
+            render: function() {
+                
+                //Draws the file dialog
+                $("#externalSongSelection").html(this.m_fileHandler);           
+            },
+
+            hideme : function() {
+                //Removes the file dialog
+                $("#externalSongSelection").html("");
+            },            
+
+            //Selected a song and reads the file data and sets the model song then after transfering it from blob to arraybuffer            
+            ChangeExternalSong : function() {
+                var f_file = this.m_fileHandler.files[0];
+
+                if (f_file) {
+                    var f_extension = f_file.fileName.split(".");
+
+                    //If mp3 format
+                    if (f_extension[f_extension.length - 1] === "mp3") {                        
+                        var blob = f_file.webkitSlice(0 , f_file.size);
+                        //Need to get the data...
+
+                        var reader = new FileReader();
+                        
+                        var f_that = this;
+
+                        reader.onloadend = function(evt) {
+                            if (evt.target.readyState == FileReader.DONE) {
+                                f_that.m_model.set("song", evt.target.result);
+                            }
+                        }
+
+                        reader.readAsArrayBuffer(blob);                        
+
+                        console.log("mp3 file loaded.. maybe!");
+
+                    //if not mp3 format
+                    } else {
+                        console.log("Bad format");
+
+                        //Resets the input field
+                        var f_that = this;
+
+                        this.m_fileHandler = document.createElement("input");
+                        this.m_fileHandler.setAttribute("type","file");
+                        this.m_fileHandler.addEventListener("change",function() { f_that.ChangeExternalSong() } );                         
+                        
+                        //Renders the new input field
+                        this.render();    
+                    }
+                } 
+            }
+
+
+            
+                    
+    });
+
     var soundfile = {
         //The soundfile model has a song property which is a sound buffer (a mp3 in Web Audio terms) and some functionality to load new mp3's
         model : Backbone.Model.extend({
@@ -11,7 +88,7 @@ define(["backbone"], function(Backbone) {
                     url : _url,
                     title : _title,
                     //these can be switched between by clicking the song box in the GUI
-                    files : ["sounds/demo.mp3", "sounds/drums.mp3", "sounds/sour.mp3", "sounds/song.mp3"]
+                    files : ["sounds/demo.mp3", "sounds/drums.mp3", "sounds/sour.mp3", "sounds/song.mp3 , /external"]
                 });
                 this.changeFile(_url, _title);
             },
@@ -41,18 +118,38 @@ define(["backbone"], function(Backbone) {
                 };
                 xhr.send(null);
             }
-        }),
+        }),        
         
         //This is the song box with a title in the GUI
         view : Backbone.View.extend({
-            className: "songView",
-            initialize : function() {
-                _.bindAll(this, "render", "nextFile");
-                this.model.bind("change", this.render);
+            className: "songView",            
+            initialize : function() {                
+
+                //Had to call it here cause this.model was undefined if doing new externalSongSelectView few lines down in the code
+                this.externalSongView = new externalSongSelectView(this, this.model);
+
                 this.template = _.template("<p><%= title %></p>");
-            },
-            render : function() {
-                $(this.el).html(this.template({title: this.model.get("title")}));
+                this.render();
+                
+            },  
+            
+            externalSongView:null,        
+                    
+            render : function() {            
+                
+                //External song is selected
+                if (this.model.get("currentFileIndex") === this.model.get("files").length - 1)
+                {
+                    
+                    $(this.el).html(this.template({title: this.model.get("title")}));
+                    this.externalSongView.render();
+                }
+                else
+                {
+                    $(this.el).html(this.template({title: this.model.get("title")}));
+                    this.externalSongView.hideme();
+                }               
+
                 return this;
             },
             events: {
@@ -65,11 +162,22 @@ define(["backbone"], function(Backbone) {
                     this.model.set("currentFileIndex", 0);
                 }
                 var index = this.model.get("currentFileIndex");
-                //Change the file!
-                this.model.changeFile(this.model.get("files")[index]);
-                //Re-render the songbox.
+
+                //If it's the last in the index it's external
+                if (index === this.model.get("files").length - 1)
+                {                
+                    this.model.set("title", "external");                   
+                }
+                else
+                {
+                    //Change the file!
+                    this.model.changeFile(this.model.get("files")[index]);
+                                 
+                }                
+                
+                //Re-render the songbox.   
                 this.render();
-                this.model.set("currentFileIndex", (this.model.get("currentFileIndex")+1) % this.model.get("files").length);
+                this.model.set("currentFileIndex", (index+1) % this.model.get("files").length);
                 
             }
         })
